@@ -1,0 +1,28 @@
+let mapleader = "\<space>"
+
+
+au BufReadPost *.ezt set syntax=html
+nnoremap <leader>w : wa<CR>
+
+nnoremap <leader>rv :source $MYVIMRC<CR>
+
+filetype plugin on  
+syntax on
+set number
+ 
+inoremap <C-k> <Esc>0<Esc>j
+
+inoremap <C-a> <esc>ggVG<CR>
+nmap <C-N><C-N> :set invnumber<CR>
+
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
+nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
+
+let notabs = 0 
+nnoremap <silent> <F8> :let notabs=!notabs<Bar>:if notabs<Bar>:tabo<Bar>:else<Bar>:tab ball<Bar>:tabn<Bar>:endif<CR>
+
+cabbrev tabv tab sview +setlocal\ nomodifiable
+
+
