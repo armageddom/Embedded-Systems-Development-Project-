@@ -1,6 +1,8 @@
 import os
 import glob
 import time
+import string
+import paho.mqtt.client as mqtt
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
@@ -9,6 +11,23 @@ base_dir = '/sys/bus/w1/devices/'
 
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
+
+
+
+server = "m14.cloudmqtt.com"
+user = "ielzboam"
+password = "OBOVMmpfc_yL"
+Port = 19422
+client_id = "pythonMQTT-publish"
+
+
+client = mqtt.Client(client_id)
+
+client.username_pw_set(user,password)
+
+client.connect(server,Port,keepalive=60,bind_address="")
+client.loop_start()
+
 
 def read_temp_raw():
     f = open(device_file, 'r')
@@ -29,4 +48,6 @@ def read_temp():
 
 while True:
     print(read_temp())
+    temp = read_temp()
+    client.publish("Lampotila", temp)
     time.sleep(1)
